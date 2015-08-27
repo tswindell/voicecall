@@ -1,7 +1,9 @@
 include(../../plugin.pri)
 TARGET = voicecall-commhistory-plugin
 
-PKGCONFIG += commhistory-qt5
+QT += contacts dbus
+
+PKGCONFIG += commhistory-qt5 contactcache-qt5 qtcontacts-sqlite-qt5-extensions nemonotifications-qt5 
 
 DEFINES += PLUGIN_NAME=\\\"commhistory-plugin\\\"
 
