@@ -13,6 +13,7 @@ Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Multimedia)
+BuildRequires:  pkgconfig(Qt5Contacts)
 BuildRequires:  pkgconfig(libresourceqt5)
 BuildRequires:  pkgconfig(libpulse-mainloop-glib)
 BuildRequires:  pkgconfig(ngf-qt5)
