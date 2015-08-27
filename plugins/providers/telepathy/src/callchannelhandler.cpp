@@ -318,23 +318,23 @@ void CallChannelHandler::onCallChannelChannelReady(Tp::PendingOperation *op)
         }
     }
 
-    d->channel->setRinging();
+    d->isIncoming = !d->channel->isRequested();
+
+    if(d->isIncoming)
+    {
+        setStatus(STATUS_INCOMING);
+        d->channel->setRinging();
+    }
+    else
+    {
+        setStatus(STATUS_DIALING);
+        d->channel.data()->accept();
+    }
 
     emit lineIdChanged(lineId());
     emit multipartyChanged(isMultiparty());
     emit emergencyChanged(isEmergency());
     emit forwardedChanged(isForwarded());
-
-    if(d->channel->isRequested())
-    {
-        setStatus(STATUS_ALERTING);
-    }
-    else
-    {
-        setStatus(STATUS_INCOMING);
-    }
-
-    d->isIncoming = !d->channel->isRequested();
 }
 
 void CallChannelHandler::onCallChannelChannelInvalidated(Tp::DBusProxy *, const QString &errorName, const QString &errorMessage)
@@ -361,11 +361,8 @@ void CallChannelHandler::onCallChannelCallStateChanged(Tp::CallState state)
     switch(state)
     {
     case Tp::CallStateUnknown:
-        setStatus(STATUS_NULL);
-        break;
-
     case Tp::CallStatePendingInitiator:
-        setStatus(STATUS_DIALING);
+        setStatus(STATUS_NULL);
         break;
 
     case Tp::CallStateInitialising:
@@ -373,9 +370,6 @@ void CallChannelHandler::onCallChannelCallStateChanged(Tp::CallState state)
         break;
 
     case Tp::CallStateInitialised:
-        setStatus(STATUS_ALERTING);
-        break;
-
     case Tp::CallStateAccepted:
         setStatus(STATUS_ALERTING);
         break;
