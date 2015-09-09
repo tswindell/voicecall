@@ -3,7 +3,7 @@ TARGET = voicecall-telepathy-plugin
 
 PKGCONFIG += TelepathyQt5 TelepathyQt5Farstream
 
-#DEFINES += WANT_TRACE
+DEFINES += WANT_TRACE
 
 HEADERS += \
     telepathyproviderplugin.h \
